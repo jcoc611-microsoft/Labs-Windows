@@ -54,6 +54,7 @@ public partial class MarkdownTextBlock : Control
         var pipelineBuilder = new MarkdownPipelineBuilder();
 
         // NOTE: Order matters here
+        if (UseAlertBoxes) pipelineBuilder = pipelineBuilder.UseAlertBlocks();
         if (UseEmphasisExtras) pipelineBuilder = pipelineBuilder.UseEmphasisExtras();
         if (UsePipeTables) pipelineBuilder = pipelineBuilder.UsePipeTables();
         if (UseListExtras) pipelineBuilder = pipelineBuilder.UseListExtras();
@@ -101,6 +102,9 @@ public partial class MarkdownTextBlock : Control
             if (_renderer == null)
             {
                 _renderer = new WinUIRenderer(_document, Config, this);
+
+                // Extension renderers that must come before the default renderers
+                if (UseAlertBoxes) _renderer.ObjectRenderers.Add(new AlertBlockRenderer());
 
                 // Default block renderers
                 _renderer.ObjectRenderers.Add(new CodeBlockRenderer());

@@ -46,6 +46,7 @@
                                     UseEmphasisExtras="True"
                                     UseListExtras="True"
                                     UsePipeTables="True"
-                                    UseTaskLists="True" />
+                                    UseTaskLists="True"
+                                    UseAlertBoxes="True" />
     </Grid>
 </Page>

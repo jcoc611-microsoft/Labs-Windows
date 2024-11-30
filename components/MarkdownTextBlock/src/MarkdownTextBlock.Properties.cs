@@ -82,6 +82,15 @@ public partial class MarkdownTextBlock
         new PropertyMetadata(false));
 
     /// <summary>
+    /// Identifies the <see cref="UseAlertBoxes"/> dependency property.
+    /// </summary>
+    private static readonly DependencyProperty UseAlertBoxesProperty = DependencyProperty.Register(
+        nameof(UseAlertBoxes),
+        typeof(bool),
+        typeof(MarkdownTextBlock),
+        new PropertyMetadata(false));
+
+    /// <summary>
     /// Identifies the <see cref="MarkdownDocument"/> dependency property.
     /// </summary>
     private static readonly DependencyProperty MarkdownDocumentProperty = DependencyProperty.Register(
@@ -157,6 +166,15 @@ public partial class MarkdownTextBlock
     {
         get => (bool)GetValue(UseSoftlineBreakAsHardlineBreakProperty);
         set => SetValue(UseSoftlineBreakAsHardlineBreakProperty, value);
+    }
+
+    /// <summary>
+    /// If true, adds support for GitHub-style alert boxes.
+    /// </summary>
+    public bool UseAlertBoxes
+    {
+        get => (bool)GetValue(UseAlertBoxesProperty);
+        set => SetValue(UseAlertBoxesProperty, value);
     }
 
     /// <summary>
