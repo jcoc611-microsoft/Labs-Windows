@@ -45,6 +45,7 @@ public partial class MarkdownTextBlock : Control
     {
         this.DefaultStyleKey = typeof(MarkdownTextBlock);
         _document = new MyFlowDocument();
+        CustomElements = new List<IMarkdownElement>();
     }
 
     protected override void OnApplyTemplate()
@@ -60,6 +61,14 @@ public partial class MarkdownTextBlock : Control
         if (UseTaskLists) pipelineBuilder = pipelineBuilder.UseTaskLists();
         if (UseAutoLinks) pipelineBuilder = pipelineBuilder.UseAutoLinks();
         if (UseSoftlineBreakAsHardlineBreak) pipelineBuilder = pipelineBuilder.UseSoftlineBreakAsHardlineBreak();
+
+        if (CustomElements != null)
+        {
+            foreach (var element in CustomElements)
+            {
+                element.AddToPipeline(ref pipelineBuilder);
+            }
+        }
 
         _pipeline = pipelineBuilder.Build();
 
@@ -126,6 +135,14 @@ public partial class MarkdownTextBlock : Control
                 if (UsePipeTables) _renderer.ObjectRenderers.Add(new TableRenderer());
                 if (UseTaskLists) _renderer.ObjectRenderers.Add(new TaskListRenderer());
                 _renderer.ObjectRenderers.Add(new HtmlInlineRenderer());
+
+                if (CustomElements != null)
+                {
+                    foreach (var element in CustomElements)
+                    {
+                        _renderer.ObjectRenderers.Add(element.GetRenderer());
+                    }
+                }
             }
             _pipeline.Setup(_renderer);
             ApplyText(false);

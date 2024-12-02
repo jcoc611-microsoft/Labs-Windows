@@ -90,6 +90,15 @@ public partial class MarkdownTextBlock
         typeof(MarkdownTextBlock),
         new PropertyMetadata(null));
 
+    /// <summary>
+    /// Identifies the <see cref="CustomElements"/> dependency property.
+    /// </summary>
+    private static readonly DependencyProperty CustomElementsProperty = DependencyProperty.Register(
+        nameof(CustomElements),
+        typeof(List<IMarkdownElement>),
+        typeof(MarkdownTextBlock),
+        new PropertyMetadata(null));
+
     public MarkdownConfig Config
     {
         get => (MarkdownConfig)GetValue(ConfigProperty);
@@ -166,5 +175,14 @@ public partial class MarkdownTextBlock
     {
         get => (MarkdownDocument)GetValue(MarkdownDocumentProperty);
         private set => SetValue(MarkdownDocumentProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets custom markdown elements to add to the Markdown parser and renderer.
+    /// </summary>
+    public List<IMarkdownElement> CustomElements
+    {
+        get => (List<IMarkdownElement>)GetValue(CustomElementsProperty);
+        set => SetValue(CustomElementsProperty, value);
     }
 }
